@@ -1,16 +1,9 @@
-// console.log("Hello, World!");
+// import { main } from "#/index.js"
 
-const obj = {
-     name: "Something",
-     age: 29,
-     pos: "Cyber-Security"
-}
-console.log(obj)
+const { main } = require("./src/iodevblue/sandbox/javascript/playground/index.js");
 
-obj.cash = "$4,500"
-console.log('Obj\'s cash is ' + obj.cash)
+console.log("\n\nExecuting main...")
+main();
+console.log("Terminating main...\n\n")
 
-obj.cash = null
-console.log("Object's cash is nullified. Reprinting value...")
-console.log('Obj\'s cash is ' + obj.cash)
 
