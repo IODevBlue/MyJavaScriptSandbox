@@ -63,14 +63,4 @@ Object.freeze(Array.prototype);
 
 Once `Object.freeze(Promise.prototype)` executes, any subsequent attempt by an attacker to alter or overwrite .then will throw an error or fail silently, rendering the pollution attack useless.
 
-------------------------------
-
-
-[1] [https://www.youtube.com](https://www.youtube.com/watch?v=XSgNXcJUr2Y&t=389)
-[2] [https://portswigger.net](https://portswigger.net/web-security/prototype-pollution)
-[3] [https://www.imperva.com](https://www.imperva.com/learn/application-security/prototype-pollution/)
-[4] [https://www.youtube.com](https://www.youtube.com/watch?v=5ja_NVVg4Yc&t=400)
-[5] [https://medium.com](https://medium.com/@appsecwarrior/prototype-pollution-a-javascript-vulnerability-c136f801f9e1)
-[6] [https://www.cobalt.io](https://www.cobalt.io/blog/a-pentesters-guide-to-prototype-pollution-attacks)
-[7] [https://blog.vidocsecurity.com](https://blog.vidocsecurity.com/blog/beginners-guide-to-understanding-client-prototype-pollution)
 
