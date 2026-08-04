@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Systems Interface</title>
+</head>
+<body>
+    <h1 id="status-title">System Status: Idle</h1>
+    <button id="toggle-btn">Execute Task</button>
+    <br/><br/>
+    <img id="image" src="" width="300">
+    <div class="button_container">
+        <button id="random_img_btn">Show Random Image</button>
+    </div>
+    <br/><br/>
+    <button id="show_alert">Show Alert</button>
+
+    <!-- This is the "Linker" -->
+    <!-- It instructs the browser to download and execute main.js -->
+    <script src="main.mjs" type="module"></script>
+    <script>
+        let img_src = "../resources/images/blue_violet.png"
+        
+        const img_node = document.getElementById("image")
+        if(img_node) {
+            img_node.src = img_src
+        }
+    </script>
+</body>
+</html>

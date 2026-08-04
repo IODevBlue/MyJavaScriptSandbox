@@ -1,5 +1,49 @@
 "use strict";
 
+///////////////////////////////////////////////////////////////////////////
+// IMPORTS
+///////////////////////////////////////////////////////////////////////////
+const global_switch = require(`./web/global_switch.mjs`).default
+const fs = require(`fs`)
+
+
+
+let activateDOM = false;
+
+/// This is supposed to be a Node.js environment, but we can check if we're in a browser context
+const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+///////////////////////////////////////////////////////////////////////////
+// DOM
+///////////////////////////////////////////////////////////////////////////
+if(activateDOM && isBrowser) {
+    // Access the DOM elements by their ID
+    const btn = document.getElementById('toggle-btn');
+    const title = document.getElementById('status-title');
+
+    let isProcessing = false;
+
+    // Register an event listener (The Event Loop Hook)
+    btn.addEventListener('click', () => {
+        isProcessing = !isProcessing;
+
+        if (isProcessing) {
+            title.textContent = "System Status: Processing...";
+            btn.textContent = "Halt Task";
+        } else {
+            title.textContent = "System Status: Idle";
+            btn.textContent = "Execute Task";
+        }
+    });
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// FUNCTIONS
+///////////////////////////////////////////////////////////////////////////
+
 // transform("Something", (item) => console.log(item))
 function transform(item, callback) {
     callback(typeof item == "string" ? item.length : 0)
@@ -98,6 +142,15 @@ function pollusted_then() {
         return originalThen.call(this, hookedOnFulfilled, onRejected);
     };
 
+    // --- YOUR REGULAR SECURE APPLICATION CODE ---
+    // Imagine your application is processing a highly sensitive transaction or API call
+    const fetchUserSession = () => Promise.resolve({ userId: 99, token: "SECRET_JWT_AUTH_TOKEN" });
+
+    fetchUserSession().then((session) => {
+        // Your app executes perfectly normally
+        console.log(`[APP] App processed login for user ${session.userId}`);
+    });
+
 }
 
 function delay(ms) {
@@ -110,24 +163,42 @@ function delay(ms) {
         }
     })
 }
-function main() {
 
-    // --- YOUR REGULAR SECURE APPLICATION CODE ---
-    // Imagine your application is processing a highly sensitive transaction or API call
-    const fetchUserSession = () => Promise.resolve({ userId: 99, token: "SECRET_JWT_AUTH_TOKEN" });
-
-    fetchUserSession().then((session) => {
-        // Your app executes perfectly normally
-        console.log(`[APP] App processed login for user ${session.userId}`);
-    });
-
-    delay(1000)
-        .then((message) => {
-            console.log(message);
-            return delay(2000);
-        })
-
+function* powers(n) {
+    for(let current = n; current <= n * 10; current *= n) {
+        yield current;
+    }
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// MAIN FUNCTION
+///////////////////////////////////////////////////////////////////////////
+// import global_switch from '#/web/global_switches.mjs';
+
+ function main() {
+    // let new_switch = new global_switch.constructor()
+    // let proto_instance = Object.getPrototypeOf(global_switch)
+    // let new_inst = Object.create(Object.getPrototypeOf(global_switch))
+    // // global_switch.instance()
+    // const hacked = Reflect.construct(global_switch.constructor, [])
+
+    // hacked.print_this("Something")
+    // console.log(new_inst)
+    // // console.log(new_switch === global_switch)
+
+     import('#/web/img_scanner.mjs').then(module => {
+        module.load_test_img_dir()
+        console.log(module.images)
+    })
+
+    // import('#/web/index.mjs').then(module => {
+    //     module.main()
+    // })
+}
+
+
 
 module.exports = { main };
 
