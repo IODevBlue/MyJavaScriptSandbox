@@ -6,14 +6,14 @@
 </head>
 <body>
     <h1 id="status-title">System Status: Idle</h1>
-    <button id="toggle-btn">Execute Task</button>
+    <button id="toggle-btn" style="color: brown;">Execute Task</button>
     <br/><br/>
     <img id="image" src="" width="300">
     <div class="button_container">
         <button id="random_img_btn">Show Random Image</button>
     </div>
     <br/><br/>
-    <button id="show_alert">Show Alert</button>
+    <button id="show_alert" custom-attr="Something">Show Alert</button>
 
     <!-- This is the "Linker" -->
     <!-- It instructs the browser to download and execute main.js -->
@@ -26,5 +26,23 @@
             img_node.src = img_src
         }
     </script>
+     <br/><br/>
+    <textarea id="txt_area" rows="10" cols="50"></textarea>
+    <br/><br/>
+    <button id="extract_text_btn">Send Text to Worker</button>
+    <br/><br/>
+    <form id="submit-form" action="/submit-endpoint" method="POST">
+        <!-- Label linked to an input via 'for' and 'id' -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="user_name" required>    
+        <br/>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user_pass" required>
+        <br/>
+
+        <!-- Submission button triggers form action -->
+        <button type="submit">Submit Data</button>
+    </form>
+
 </body>
 </html>

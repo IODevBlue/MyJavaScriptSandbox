@@ -32,44 +32,67 @@ if(global_switch.allow_scripting) {
      .catch(err => console.log("Error"))
      img_arr = Array.from(images)
 
-     const btn = document.getElementById('toggle-btn');
-     const title = document.getElementById('status-title');
-     const show_alert_btn = document.getElementById("show_alert")
-     const show_random_img_btn = document.getElementById("random_img_btn")
-     const img_node = document.getElementById("image")
+     const $btn = document.getElementById('toggle-btn');
+     const $title = document.getElementById('status-title');
+     const $show_alert_btn = document.getElementById("show_alert")
+     const $show_random_img_btn = document.getElementById("random_img_btn")
+     const $img_node = document.getElementById("image")
+     const $extract_text_btn = document.getElementById("extract_text_btn")
+     const $txt_area = document.getElementById("txt_area")
+     const $my_form = document.getElementById("submit-form")
+
+     const myWorker = new Worker('worker.mjs', { type: 'module' });
 
      let isProcessing = false;
 
      // Register an event listener (The Event Loop Hook)
-     btn.addEventListener('click', () => {
+     $btn.addEventListener('click', () => {
           isProcessing = !isProcessing;
 
           if (isProcessing) {
-               title.textContent = "System Status: Processing...";
-               btn.textContent = "Halt Task";
+               $title.textContent = "System Status: Processing...";
+               $btn.textContent = "Halt Task";
           } else {
-               title.textContent = "System Status: Idle";
-               btn.textContent = "Execute Task";
+               $title.textContent = "System Status: Idle";
+               $btn.textContent = "Execute Task";
           }
      });
 
-     show_alert_btn.addEventListener('click', () => {
+     $show_alert_btn.addEventListener('click', () => {
           show_window_alert("This is an alert")
-          console.log("Alert Shown!")
      });
 
-     show_random_img_btn.addEventListener(`click`, () => {
+
+     $show_random_img_btn.addEventListener(`click`, () => {
           if(img_arr.length === 0) {
                alert("Image array is empty or still loading!!")
           }
 
           const rand_index = Math.floor(Math.random() * img_arr.length);
           const rand_img_name = img_arr[rand_index]
-          img_node.src = `${img_dir}/${rand_img_name}`
+          $img_node.src = `${img_dir}/${rand_img_name}`
      })
 
+     $extract_text_btn.addEventListener('click', () => {
+          console.log(`Sending payload to Worker: ${$txt_area.value}`)
+          myWorker.postMessage({pay_load: $txt_area.value });
+     })
 
+     myWorker.onmessage = (event) => {
+          show_window_alert(`Worker Response: \n${event.data}`);
+     };
+
+     $my_form.addEventListener('submit', (event) => {
+          event.preventDefault(); // Prevent the default form submission behavior
+
+          const formData = new FormData($my_form);
+          const formObject = Object.fromEntries(formData.entries());
+
+          console.log("Form Data Submitted: ", formObject);
+          show_window_alert(`Form Data Submitted: \n${JSON.stringify(formObject, null, 2)}`);
+     });
 }
+
 
 
 
